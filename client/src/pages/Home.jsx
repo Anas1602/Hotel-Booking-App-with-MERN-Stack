@@ -4,17 +4,18 @@ import FeaturedDestination from "../components/FeaturedDestination";
 import ExclusiveOffers from "../components/ExclusiveOffers";
 import Testimonials from "../components/Testimonials";
 import NewsLetter from "../components/NewsLetter";
-import Footer from "../components/Footer";
 
 const Home = () => {
   return (
-    <>
+    <div className="flex flex-col w-full">
       <Hero />
       <FeaturedDestination />
       <ExclusiveOffers />
       <Testimonials />
-      <NewsLetter />
-    </>
+      <div className="bg-white py-12">
+        <NewsLetter />
+      </div>
+    </div>
   );
 };
 

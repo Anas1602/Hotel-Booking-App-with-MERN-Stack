@@ -10,9 +10,9 @@ const App = () => {
   const isOwnerPath = useLocation().pathname.includes("owner");
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-gray-50">
       {!isOwnerPath && <Navbar />}
-      <div className="min-h-[70vh]">
+      <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rooms" element={<AllRooms />} />
@@ -25,4 +25,3 @@ const App = () => {
 };
 
 export default App;
-// 57
