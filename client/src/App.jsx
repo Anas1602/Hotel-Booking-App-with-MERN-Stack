@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 import React from "react";
 import Navbar from "./components/Navbar";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -6,6 +7,7 @@ import Footer from "./components/Footer";
 import AllRooms from "./pages/AllRooms";
 import RoomDetails from "./pages/RoomDetails";
 import MyBookings from "./pages/MyBookings";
+import HotelReg from "./components/HotelReg";
 
 const App = () => {
   const isOwnerPath = useLocation().pathname.includes("owner");
@@ -13,6 +15,7 @@ const App = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       {!isOwnerPath && <Navbar />}
+      {false && <HotelReg />}
       <div className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
