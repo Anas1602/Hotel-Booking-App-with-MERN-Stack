@@ -56,126 +56,169 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0  w-full flex items-center justify-between px-4 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
+      className={`fixed top-0 left-0 w-full flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 transition-all duration-500 z-50 ${
         isScrolled
-          ? "bg-white/80 shadow-md text-gray-700 backdrop-blur-lg py-3 md:py-4"
-          : "py-4 md:py-6"
+          ? "bg-white/90 shadow-lg text-gray-800 backdrop-blur-lg py-3 md:py-4"
+          : "py-6 md:py-8"
       }`}>
       {/* Logo */}
-      <Link to="/">
+      <Link to="/" className="flex items-center">
         <img
           src={assets.logo}
           alt="logo"
-          className={`h-9 ${isScrolled && "invert opacity-80"}`}
+          className={`h-10 transition-all duration-300 ${
+            isScrolled && "invert opacity-90 scale-95"
+          }`}
         />
       </Link>
 
       {/* Desktop Nav */}
-      <div className="hidden md:flex items-center gap-4 lg:gap-8">
+      <div className="hidden md:flex items-center gap-6 lg:gap-10 font-medium">
         {navLinks.map((link, i) => (
           <a
             key={i}
             href={link.path}
-            className={`group flex flex-col gap-0.5 ${
-              isScrolled ? "text-gray-700" : "text-white"
-            }`}>
-            {link.name}
+            className={`group relative py-2 overflow-hidden ${
+              isScrolled
+                ? "text-gray-800 hover:text-primary"
+                : "text-white hover:text-white/80"
+            } transition-colors duration-300`}>
+            <span className="relative z-10">{link.name}</span>
             <div
-              className={`${
-                isScrolled ? "bg-gray-700" : "bg-white"
-              } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
+              className={`absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-300 ease-in-out ${
+                isScrolled ? "bg-primary" : "bg-white"
+              }`}
             />
           </a>
         ))}
         <button
           onClick={() => navigate("/owner")}
-          className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
-            isScrolled ? "text-black" : "text-white"
-          } transition-all`}>
+          className={`border-2 px-5 py-1.5 text-sm font-medium rounded-full cursor-pointer transform hover:-translate-y-0.5 transition-all duration-300 ${
+            isScrolled
+              ? "border-primary text-primary hover:bg-primary hover:text-white"
+              : "border-white text-white hover:bg-white/10"
+          }`}>
           Dashboard
         </button>
       </div>
 
       {/* Desktop Right */}
-      <div className="hidden md:flex items-center gap-4">
-        <img
-          src={assets.searchIcon}
-          alt="search"
-          className={`${
-            isScrolled && "invert"
-          } h-7 transition-all duration-500`}
-        />
+      <div className="hidden md:flex items-center gap-6">
+        <button
+          className={`group relative p-2 rounded-full hover:bg-gray-100/20 transition-all duration-300`}>
+          <img
+            src={assets.searchIcon}
+            alt="search"
+            className={`h-5 transition-all duration-300 ${
+              isScrolled && "invert"
+            }`}
+          />
+        </button>
 
         {user ? (
-          <UserButton>
-            <UserButton.MenuItems>
-              <UserButton.Action
-                label="My Bookings"
-                labelIcon={BookIcon}
-                onClick={() => navigate("/my-bookings")}
-              />
-            </UserButton.MenuItems>
-          </UserButton>
+          <div className="ml-2 transform hover:scale-105 transition-transform duration-300">
+            <UserButton>
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="My Bookings"
+                  labelIcon={BookIcon}
+                  onClick={() => navigate("/my-bookings")}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
+          </div>
         ) : (
           <button
             onClick={openSignIn}
-            className="bg-black text-white px-8 py-2.5 rounded-full ml-4 transition-all duration-500">
+            className={`flex items-center justify-center px-8 py-2.5 rounded-full font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-300 ${
+              isScrolled
+                ? "bg-primary text-white hover:bg-primary-dull"
+                : "bg-white text-gray-800 hover:bg-white/90"
+            }`}>
             Login
           </button>
         )}
       </div>
 
       {/* Mobile Menu Button */}
-
-      <div className="flex items-center gap-3 md:hidden">
+      <div className="flex items-center gap-4 md:hidden">
         {user && (
-          <UserButton>
-            <UserButton.MenuItems>
-              <UserButton.Action
-                label="My Bookings"
-                labelIcon={BookIcon}
-                onClick={() => navigate("/my-bookings")}
-              />
-            </UserButton.MenuItems>
-          </UserButton>
+          <div className="transform hover:scale-105 transition-transform duration-300">
+            <UserButton>
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="My Bookings"
+                  labelIcon={BookIcon}
+                  onClick={() => navigate("/my-bookings")}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
+          </div>
         )}
-        <img
+        <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          src={assets.menuIcon}
-          alt="menu"
-          className={`${isScrolled && "invert"} h-4`}
-        />
+          className={`p-2 rounded-full ${
+            isScrolled ? "hover:bg-gray-100" : "hover:bg-white/10"
+          } transition-all duration-300`}>
+          <img
+            src={assets.menuIcon}
+            alt="menu"
+            className={`h-5 transition-all duration-300 ${
+              isScrolled && "invert"
+            }`}
+          />
+        </button>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-6 font-medium text-gray-800 transition-all duration-500 ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-0 left-0 w-full h-screen bg-white text-base flex flex-col md:hidden items-center justify-center gap-8 font-medium text-gray-800 transition-all duration-500 ease-in-out ${
+          isMenuOpen
+            ? "translate-x-0 opacity-100"
+            : "-translate-x-full opacity-0"
         }`}>
         <button
-          className="absolute top-4 right-4"
+          className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 transition-all duration-300"
           onClick={() => setIsMenuOpen(false)}>
           <img src={assets.closeIcon} alt="closeMenu" className="h-6" />
         </button>
 
+        <Link to="/" onClick={() => setIsMenuOpen(false)}>
+          <img
+            src={assets.logo}
+            alt="logo"
+            className="h-12 mb-8 invert opacity-90"
+          />
+        </Link>
+
         {navLinks.map((link, i) => (
-          <a key={i} href={link.path} onClick={() => setIsMenuOpen(false)}>
+          <a
+            key={i}
+            href={link.path}
+            onClick={() => setIsMenuOpen(false)}
+            className="relative py-2 text-lg hover:text-primary transition-colors duration-300 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-primary hover:after:w-1/2 after:transition-all after:duration-300">
             {link.name}
           </a>
         ))}
 
         {user && (
           <button
-            onClick={() => navigate("/owner")}
-            className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
+            onClick={() => {
+              navigate("/owner");
+              setIsMenuOpen(false);
+            }}
+            className="border-2 border-primary text-primary px-6 py-2 rounded-full hover:bg-primary hover:text-white transition-all duration-300 mt-4">
             Dashboard
           </button>
         )}
 
         {!user && (
           <button
-            onClick={openSignIn}
-            className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
+            onClick={() => {
+              openSignIn();
+              setIsMenuOpen(false);
+            }}
+            className="bg-primary text-white px-8 py-3 rounded-full shadow-md hover:shadow-lg hover:bg-primary-dull transition-all duration-300 mt-6">
             Login
           </button>
         )}
